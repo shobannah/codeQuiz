@@ -73,8 +73,7 @@ choices.forEach(choice =>{
         acceptingAnswer = false
         var selectedChoice = e.target
         var selectedAnswer = selectedChoice.dataset["number"]
-
-        var classToApply = selectedAnswer == currentQuestion.answer ? "correct" : "incorrect"
+        var classToApply = selectedAnswer == currentQuestion.correctAnswer ? "correct" : "incorrect"   
 
         selectedChoice.parentElement.classList.add(classToApply)
 

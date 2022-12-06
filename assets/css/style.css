@@ -61,3 +61,10 @@
     display: none;
 }
 
+.correct .btn {
+    background-color: green;
+}
+
+.incorrect .btn {
+    background-color: red;
+}
