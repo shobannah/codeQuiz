@@ -1,73 +1,91 @@
 
-var myQuestions = [
+var questions = [
     {
-        question: "What tag is used for header 1?",
-        answers: { 
-            a: "<p>" , 
-            b: "<ul>", 
-            c: "<h>", 
-            d: "<h1>",
-        },
-        correctAnswer: "d",
+        question: "What tag is used for header 1?", 
+        choice1: "<p>" , 
+        choice2: "<ul>", 
+        choice3: "<h>", 
+        choice4: "<h1>",
+        correctAnswer: 4,
     },
     {
         question: "What resets the styling of all HTML elements to a consistent baseline?",
-        answers: {
-            a:"css file" , 
-            b: "css reset file" , 
-            c: "css starter file" , 
-            d: "css main file",
-        },
-        correctAnswer: "b",
+        choice1:"css file" , 
+        choice2: "css reset file" , 
+        choice3: "css starter file" , 
+        choice4: "css main file",
+        correctAnswer: 2,
     },
     {
         question: "How many times can you repeat an id in an html file?",
-        answers: {
-            a: 1,
-            b: 2,
-            c: 3,
-            d: 4,
-        },
-        correctAnswer: "a",
+        choice1: 1,
+        choice2: 2,
+        choice3: 3,
+        choice4: 4,
+        correctAnswer: 1,
     }
 ];
 
 var starButtonEl = document.getElementById("start-button");
-var questionContainerEl = document.getElementById("question-container")
-var questionEl = document.getElementById("question")
-var answersEl = document.getElementById("answer-buttons")
+var questionContainerEl = document.getElementById("question-container");
+var question = document.querySelector("questionBlock");
+// var answersEl = document.getElementById("answer-buttons")
+var choices = Array.from(document.querySelectorAll(".choice-text"))
 
+var currentQuestion = {}
+var acceptingAnswer = true
+var availableQuestions = []
 
 
 starButtonEl.addEventListener("click", startQuiz)
-
 function startQuiz() {
     starButtonEl.classList.add("hide")
     questionContainerEl.classList.remove("hide")
-    showQuestion
+    startGame
 }
 
 
+startGame = () => {
+    availableQuestions = [...questions]
+    getNewQuestion()
+},
+
+getNewQuestion = () => {
+    var questionIndex = Math.floor(Math.random() * availableQuestions.length)
+    currentQuestion = availableQuestions[questionIndex]
+    questionBlock.innerText = currentQuestion.question
+
+    choices.forEach(choice => {
+        const number = choice.dataset["number"]
+        choice.innerText = currentQuestion["choice" + number]
+    });
+
+    availableQuestions.splice(questionIndex, 1)
+
+    acceptingAnswer = true
+},
 
 
-function generateQuiz(questions, quizContainer, resultsContainer, submitButton){
+choices.forEach(choice =>{
+    choice.addEventListener("click", e => {
+        if(!acceptingAnswer) return
 
-	function showQuestions(questions, quizContainer){
-		// code will go here
-	}
+        acceptingAnswer = false
+        var selectedChoice = e.target
+        var selectedAnswer = selectedChoice.dataset["number"]
 
-	function showResults(questions, quizContainer, resultsContainer){
-		// code will go here
-	}
+        var classToApply = selectedAnswer == currentQuestion.answer ? "correct" : "incorrect"
 
-	// show the questions
-	showQuestions(questions, quizContainer);
+        selectedChoice.parentElement.classList.add(classToApply)
 
-	// when user clicks submit, show results
-	submitButton.onclick = function(){
-		showResults(questions, quizContainer, resultsContainer);
-	}
-}
+        setTimeout(() => {
+            selectedChoice.parentElement.classList.remove(classToApply)
+            getNewQuestion()
+
+        }, 1000)
+})
+
+startGame()
 
 
 
@@ -90,4 +108,4 @@ function countdown() {
         }, 1000);
 }
 
-countdown();
+countdown()})

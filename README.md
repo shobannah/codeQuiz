@@ -11,4 +11,4 @@ This is a quiz that has you answer code-related questions within the time limit.
 
 ## Link
 
-<a href=https://github.com/shobannah/codeQuiz.git> Coding Quiz
+<a href=https://shobannah.github.io/codeQuiz/> Coding Quiz
