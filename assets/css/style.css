@@ -1,0 +1,62 @@
+
+.reset-button {
+    float: left;
+}
+
+#countdown {
+    float: right;
+}
+
+.quiz {
+    margin: 80px auto;
+    text-align: center;
+    transition: 0.3s;
+    width: 60vw;
+    padding: 50px 0px 0px 0px;
+}
+
+.container{
+    margin: 80px auto;
+    text-align: center;
+    transition: 0.3s;
+    width: 60vw;
+    background-color: burlywood;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow:  0 0 10px 2px;
+}
+
+.button-grid {
+    display: grid;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.btn {
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    outline: none;
+}
+
+.btn:hover {
+    background-color:rgb(94, 127, 216);
+}
+
+.btn.correct {
+    background-color:rgb(30, 180, 43);
+}
+
+.btn.wrong {
+    background-color:rgb(212, 42, 42);
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hide {
+    display: none;
+}
