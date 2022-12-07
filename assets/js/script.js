@@ -6,7 +6,7 @@ var questions = [
         choice2: "<ul>", 
         choice3: "<h>", 
         choice4: "<h1>",
-        correctAnswer: 4,
+        correctAnswer: "<h1>",
     },
     {
         question: "What resets the styling of all HTML elements to a consistent baseline?",
@@ -14,15 +14,15 @@ var questions = [
         choice2: "css reset file" , 
         choice3: "css starter file" , 
         choice4: "css main file",
-        correctAnswer: 2,
+        correctAnswer: "css reset file",
     },
     {
         question: "How many times can you repeat an id in an html file?",
-        choice1: 1,
-        choice2: 2,
-        choice3: 3,
-        choice4: 4,
-        correctAnswer: 1,
+        choice1: "1",
+        choice2: "2",
+        choice3: "3",
+        choice4: "4",
+        correctAnswer: "1",
     }
 ];
 
@@ -41,14 +41,30 @@ var finishPageEl = document.getElementById("finishPage");
 var formEl = document.querySelector("form");
 var highscoresEl = document.getElementById("highScores");
 var selectedAnswer;
+var timerEl = document.getElementById('countdown');
+var timeLeft = 75;
+var timeInterval;
 
 starButtonEl.addEventListener("click", startQuiz)
 
 
+function countdown() {
+    timeInterval = setInterval(function () {
+    if(timeLeft > 1) {
+        timerEl.textContent = "Time: " + timeLeft + " seconds left";
+        timeLeft--;
+    }else {
+        timerEl.textContent = "Time's Up!";
+        clearInterval(timeInterval); 
+    }
+    }, 1000);
+}
+
 function startQuiz() {
     starButtonEl.classList.add("hide")
     questionContainerEl.classList.remove("hide")
-    startGame
+    startGame()
+    countdown()
 }
 
 
@@ -81,9 +97,14 @@ console.log(currentQuestion)
 
 choices.forEach((choice, i) =>{
     choice.addEventListener("click", e => {
-        if(!acceptingAnswer) return
-
-        acceptingAnswer = false
+        
+        console.log(e.target.innerText)
+        if (e.target.innerText === currentQuestion.correctAnswer) {
+            alert("You are correct!")
+        } else {
+            timeLeft -= 15
+        }
+        
         var selectedChoice = e.target
         var selectedAnswer = selectedChoice.dataset["number"]
         var classToApply = selectedAnswer == currentQuestion.correctAnswer ? "correct" : "incorrect"   
@@ -96,28 +117,9 @@ choices.forEach((choice, i) =>{
 
         }, 1000)
 
-        
 })
 
-startGame()
-
-var timerEl = document.getElementById('countdown');
-var timeLeft = 75;
-var timeInterval;
-var minusTime = timeLeft - 15
-
-function countdown() {
-    timeInterval = setInterval(function () {
-    if(timeLeft > 1) {
-        timerEl.textContent = "Time: " + timeLeft + " seconds left";
-        timeLeft--;
-    }else {
-        timerEl.textContent = "Time's Up!";
-        clearInterval(timeInterval); 
-    }
-    }, 1000);
-}
-countdown()})
+})
 
 
 
