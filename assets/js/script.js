@@ -26,12 +26,13 @@ var questions = [
     }
 ];
 
+
+
 var starButtonEl = document.getElementById("start-button");
 var questionContainerEl = document.getElementById("question-container");
 var question = document.querySelector("questionBlock");
 // var answersEl = document.getElementById("answer-buttons")
 var choices = Array.from(document.querySelectorAll(".choice-text"))
-
 var currentQuestion = {}
 var acceptingAnswer = true
 var availableQuestions = []
@@ -39,8 +40,11 @@ var score = 0;
 var finishPageEl = document.getElementById("finishPage");
 var formEl = document.querySelector("form");
 var highscoresEl = document.getElementById("highScores");
+var selectedAnswer;
 
 starButtonEl.addEventListener("click", startQuiz)
+
+
 function startQuiz() {
     starButtonEl.classList.add("hide")
     questionContainerEl.classList.remove("hide")
@@ -60,6 +64,7 @@ getNewQuestion = () => {
     if (!currentQuestion) {
         return finish()
     } 
+    
     questionBlock.innerText = currentQuestion.question
     choices.forEach(choice => {
         const number = choice.dataset["number"]
@@ -70,6 +75,8 @@ getNewQuestion = () => {
 
     acceptingAnswer = true
 },
+
+console.log(currentQuestion)
 
 
 choices.forEach((choice, i) =>{
@@ -88,6 +95,8 @@ choices.forEach((choice, i) =>{
             getNewQuestion()
 
         }, 1000)
+
+        
 })
 
 startGame()
@@ -95,26 +104,25 @@ startGame()
 var timerEl = document.getElementById('countdown');
 var timeLeft = 75;
 var timeInterval;
+var minusTime = timeLeft - 15
 
 function countdown() {
-    
     timeInterval = setInterval(function () {
     if(timeLeft > 1) {
         timerEl.textContent = "Time: " + timeLeft + " seconds left";
         timeLeft--;
-    }else{
+    }else {
         timerEl.textContent = "Time's Up!";
         clearInterval(timeInterval); 
-        displayMessage();
     }
     }, 1000);
 }
-
 countdown()})
 
-function finish () {
 
-    
+
+
+function finish () {
  questionContainerEl.classList.add("hide")
  finishPageEl.classList.remove("hide")
  var highscores = JSON.parse(localStorage.getItem('highscores')) || [];
