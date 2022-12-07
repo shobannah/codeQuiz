@@ -3,7 +3,7 @@
 
 ## Description
 
-This is a quiz that has you answer code-related questions within the time limit. The incorrect answers will penalize your score/time by 15 seconds.
+This is a quiz that has you answer code-related questions within the time limit.
 
 ## Screenshot
 

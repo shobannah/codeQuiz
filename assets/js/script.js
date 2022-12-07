@@ -35,7 +35,10 @@ var choices = Array.from(document.querySelectorAll(".choice-text"))
 var currentQuestion = {}
 var acceptingAnswer = true
 var availableQuestions = []
-
+var score = 0;
+var finishPageEl = document.getElementById("finishPage");
+var formEl = document.querySelector("form");
+var highscoresEl = document.getElementById("highScores");
 
 starButtonEl.addEventListener("click", startQuiz)
 function startQuiz() {
@@ -53,8 +56,11 @@ startGame = () => {
 getNewQuestion = () => {
     var questionIndex = Math.floor(Math.random() * availableQuestions.length)
     currentQuestion = availableQuestions[questionIndex]
+    
+    if (!currentQuestion) {
+        return finish()
+    } 
     questionBlock.innerText = currentQuestion.question
-
     choices.forEach(choice => {
         const number = choice.dataset["number"]
         choice.innerText = currentQuestion["choice" + number]
@@ -66,7 +72,7 @@ getNewQuestion = () => {
 },
 
 
-choices.forEach(choice =>{
+choices.forEach((choice, i) =>{
     choice.addEventListener("click", e => {
         if(!acceptingAnswer) return
 
@@ -74,9 +80,9 @@ choices.forEach(choice =>{
         var selectedChoice = e.target
         var selectedAnswer = selectedChoice.dataset["number"]
         var classToApply = selectedAnswer == currentQuestion.correctAnswer ? "correct" : "incorrect"   
-
+        score = selectedAnswer == currentQuestion.correctAnswer ? score + 1 : score;
         selectedChoice.parentElement.classList.add(classToApply)
-
+        
         setTimeout(() => {
             selectedChoice.parentElement.classList.remove(classToApply)
             getNewQuestion()
@@ -86,25 +92,51 @@ choices.forEach(choice =>{
 
 startGame()
 
-
-
 var timerEl = document.getElementById('countdown');
+var timeLeft = 75;
+var timeInterval;
 
 function countdown() {
-
-
-        var timeLeft = 75;
     
-        var timeInterval = setInterval(function () {
-        if(timeLeft > 1) {
-            timerEl.textContent = "Time: " + timeLeft + " seconds left";
-            timeLeft--;
-        }else{
-            timerEl.textContent = "Time's Up!";
-            clearInterval(timeInterval); 
-            displayMessage();
-        }
-        }, 1000);
+    timeInterval = setInterval(function () {
+    if(timeLeft > 1) {
+        timerEl.textContent = "Time: " + timeLeft + " seconds left";
+        timeLeft--;
+    }else{
+        timerEl.textContent = "Time's Up!";
+        clearInterval(timeInterval); 
+        displayMessage();
+    }
+    }, 1000);
 }
 
 countdown()})
+
+function finish () {
+
+    
+ questionContainerEl.classList.add("hide")
+ finishPageEl.classList.remove("hide")
+ var highscores = JSON.parse(localStorage.getItem('highscores')) || [];
+
+ highscores.forEach(score => {
+    var scoreEl = document.createElement("div")
+    scoreEl.innerHTML = `${score.userName} : ${score.score}`
+    highscoresEl.append(scoreEl)
+ })
+}
+
+formEl.addEventListener("submit", function(e) {
+    e.preventDefault()
+    var userName = document.getElementById("name").value
+    console.log(userName)
+    var highscores = JSON.parse(localStorage.getItem('highscores')) || [];
+    highscores.push({
+        userName,
+        score
+    })
+    localStorage.setItem('highscores', JSON.stringify(highscores));
+    var scoreEl = document.createElement("div")
+    scoreEl.innerHTML = `${userName} : ${score}`
+    highscoresEl.prepend(scoreEl)
+})

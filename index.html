@@ -9,12 +9,11 @@
   <body>
     <header>
         <h3 id="countdown">Time:</h3>
-        <button class="reset-button">View Highscores</button>
     </header>
 
     <section class="quiz">
         <div class= "large-font">Coding Quiz Challenge</div>
-        <div class= "small-font">Try to answer the following code-related questions within the time limit. Keep in mind that the incorrect answers will penalize your score/time by 15 seconds!</div>
+        <div class= "small-font">Try to answer the following code-related questions within the time limit.</div>
     </section>
     <div class="container">
         <div id="question-container" class="hide">
@@ -28,6 +27,13 @@
         </div>    
         <div class="controls">
             <button id="start-button" class="start-button btn">Start</button>
+        </div>
+        <div id="finishPage" class="hide">
+          <form> 
+            <input type="text" name="name" id="name">
+            <input type="submit">
+          </form>
+          <div id="highScores"></div>
         </div>
     
     </div>
