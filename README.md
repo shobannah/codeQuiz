@@ -4,6 +4,7 @@
 ## Description
 
 This is a quiz that has you answer code-related questions within the time limit.
+15 seconds will be subtracted from the clock when you answer a question incorrectly.
 
 ## Screenshot
 

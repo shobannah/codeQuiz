@@ -1,3 +1,4 @@
+//variables
 
 var questions = [
     {
@@ -18,10 +19,10 @@ var questions = [
     },
     {
         question: "How many times can you repeat an id in an html file?",
-        choice1: "1",
-        choice2: "2",
-        choice3: "3",
-        choice4: "4",
+        choice1: 1,
+        choice2: 2,
+        choice3: 3,
+        choice4: 4,
         correctAnswer: "1",
     }
 ];
@@ -45,8 +46,12 @@ var timerEl = document.getElementById('countdown');
 var timeLeft = 75;
 var timeInterval;
 
+
+//start quiz
+
 starButtonEl.addEventListener("click", startQuiz)
 
+//countdown timer
 
 function countdown() {
     timeInterval = setInterval(function () {
@@ -73,6 +78,10 @@ startGame = () => {
     getNewQuestion()
 },
 
+
+//new question
+
+
 getNewQuestion = () => {
     var questionIndex = Math.floor(Math.random() * availableQuestions.length)
     currentQuestion = availableQuestions[questionIndex]
@@ -94,23 +103,27 @@ getNewQuestion = () => {
 
 console.log(currentQuestion)
 
+//score 
 
 choices.forEach((choice, i) =>{
     choice.addEventListener("click", e => {
         
+
+        var selectedChoice = e.target
+        var classToApply = e.target.innerText === currentQuestion.correctAnswer ? "correct" : "incorrect"   
+        score = e.target.innerText === currentQuestion.correctAnswer ? score + 1 : score;
+        selectedChoice.parentElement.classList.add(classToApply)
+
         console.log(e.target.innerText)
+
+
         if (e.target.innerText === currentQuestion.correctAnswer) {
-            alert("You are correct!")
+            "correct"
         } else {
             timeLeft -= 15
+            "incorrect"
         }
-        
-        var selectedChoice = e.target
-        var selectedAnswer = selectedChoice.dataset["number"]
-        var classToApply = selectedAnswer == currentQuestion.correctAnswer ? "correct" : "incorrect"   
-        score = selectedAnswer == currentQuestion.correctAnswer ? score + 1 : score;
-        selectedChoice.parentElement.classList.add(classToApply)
-        
+                
         setTimeout(() => {
             selectedChoice.parentElement.classList.remove(classToApply)
             getNewQuestion()
@@ -122,7 +135,7 @@ choices.forEach((choice, i) =>{
 })
 
 
-
+//highscores
 
 function finish () {
  questionContainerEl.classList.add("hide")
